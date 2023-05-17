@@ -38,6 +38,15 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+
+		<dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1.11</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/json-simple.jar</systemPath>
+        </dependency>
+
     </dependencies>
 
     <build>
