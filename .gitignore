@@ -1,0 +1,23 @@
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Compiled files
+/out/
+/classes/
+
+# Maven
+target/
+
+# Gradle
+.gradle/
+build/
+
+# Test reports
+test-output/
+
+# Other
+*.log
+*.swp
