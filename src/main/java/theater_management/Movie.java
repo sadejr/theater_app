@@ -58,6 +58,4 @@ public class Movie {
             return numRatings;
         }
 
-    private final List<Showtime> showtimes = new ArrayList<>();
-
 }

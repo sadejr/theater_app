@@ -1,8 +1,7 @@
 package theater_management;
 
+import java.io.*;
 import java.util.Scanner;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import org.json.simple.JSONArray;
@@ -35,13 +34,33 @@ public class add_movie {
         double rating = 0.0;
         int numRatings = 0;
 
+
+        // Specify the absolute path to the .env file
+        String envFilePath = "src/main/java/theater_management/.env";
+
+        // Load the environment variables from the .env file
+        String apiKey = null;
+        try (BufferedReader br = new BufferedReader(new FileReader(envFilePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] keyValue = line.split("=");
+                if (keyValue.length == 2 && keyValue[0].equals("MOVIE_API_KEY")) {
+                    apiKey = keyValue[1];
+                    break;
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error: Failed to read the .env file");
+            e.printStackTrace();
+        }
+
         // Create an instance of the genreHashmap class
         genreHashmap genreMap = new genreHashmap();
 
         // Send a request to the API to get the movie details
         StringBuilder genres = null;
         try {
-            URL url = new URL("https://api.themoviedb.org/3/search/movie?api_key=25fc92f3e432b210e453ac74e1a65f40&query=" + title);
+            URL url = new URL("https://api.themoviedb.org/3/search/movie?api_key=" + apiKey + "&query=" + title);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
 

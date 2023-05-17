@@ -46,7 +46,6 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/libs/json-simple.jar</systemPath>
         </dependency>
-
     </dependencies>
 
     <build>

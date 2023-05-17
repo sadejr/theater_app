@@ -21,3 +21,6 @@ test-output/
 # Other
 *.log
 *.swp
+
+#.env
+src/main/java/theater_management/.env
