@@ -2,12 +2,12 @@ package theater_management;
 
 import java.util.HashMap;
 
-public class genreHashmap {
+public class GenreMapper {
 
     // Declare the HashMap
-    HashMap<Integer, String> genresMap;
+    private HashMap<Integer, String> genresMap;
 
-    public genreHashmap() {
+    public GenreMapper() {
         // Initialize the HashMap
         genresMap = new HashMap<>();
 
@@ -31,5 +31,9 @@ public class genreHashmap {
         genresMap.put(53, "Thriller");
         genresMap.put(10752, "War");
         genresMap.put(37, "Western");
+    }
+
+    public String getName(int id) {
+        return genresMap.get(id);
     }
 }

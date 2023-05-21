@@ -53,8 +53,8 @@ public class TmdbClient {
             e.printStackTrace();
         }
 
-        // Create an instance of the genreHashmap class
-        genreHashmap genreMap = new genreHashmap();
+        // Create an instance of the GenreMapper class
+        GenreMapper genreMapper = new GenreMapper();
 
         // Send a request to the API to get the movie details
         StringBuilder genres = null;
@@ -92,7 +92,7 @@ public class TmdbClient {
                 genres = new StringBuilder();
                 for (Object id : genreIds) {
                     int genreId = ((Long) id).intValue();
-                    String genreName = genreMap.genresMap.get(genreId);
+                    String genreName = genreMapper.getName(genreId);
                     genres.append(genreName).append(", ");
                 }
                 genres = new StringBuilder(genres.substring(0, genres.length() - 2)); // Remove the last comma and space
