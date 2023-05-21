@@ -41,7 +41,8 @@ public class Main {
                     System.exit(0);
 
                 case 1:
-                    Movie movie = TmdbClient.getMovie();
+                    TmdbClient tmdbClient = new TmdbClient();
+                    Movie movie = tmdbClient.getMovie();
                     theater.addMovie(movie);
                     System.out.println("Movie added successfully!\n");
                     break;

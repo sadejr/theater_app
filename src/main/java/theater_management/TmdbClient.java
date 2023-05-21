@@ -10,7 +10,7 @@ import org.json.simple.parser.JSONParser;
 
 public class TmdbClient {
 
-    public static Movie getMovie() {
+    public Movie getMovie() {
         Scanner input = new Scanner(System.in);
 
         System.out.print("Enter the title of the movie: ");
@@ -28,7 +28,7 @@ public class TmdbClient {
     }
 
     // Send a request to the API to get the movie details
-    private static Movie retrieveMovie(String title, String director, int duration) {
+    private Movie retrieveMovie(String title, String director, int duration) {
         int releaseYear = 0;
         String description = "";
         double rating = 0.0;
