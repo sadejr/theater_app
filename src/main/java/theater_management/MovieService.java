@@ -8,9 +8,9 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-public class add_movie {
+public class MovieService {
 
-    public static Movie main() {
+    public static Movie getMovie() {
         Scanner input = new Scanner(System.in);
 
         System.out.print("Enter the title of the movie: ");
@@ -24,16 +24,15 @@ public class add_movie {
         int duration = input.nextInt();
 
         // Create a Movie object using the details obtained from the API
-        return getMovie(title, director, duration);
+        return retrieveMovie(title, director, duration);
     }
 
     // Send a request to the API to get the movie details
-    private static Movie getMovie(String title, String director, int duration) {
+    private static Movie retrieveMovie(String title, String director, int duration) {
         int releaseYear = 0;
         String description = "";
         double rating = 0.0;
         int numRatings = 0;
-
 
         // Specify the absolute path to the .env file
         String envFilePath = "src/main/java/theater_management/.env";
@@ -77,6 +76,7 @@ public class add_movie {
 
             // Extract the movie details from the first result of the search
             JSONArray results = (JSONArray) json.get("results");
+
             if (results.size() > 0) {
                 JSONObject movie = (JSONObject) results.get(0);
 
@@ -110,7 +110,10 @@ public class add_movie {
         }
 
         // Create a Movie object using the details obtained from the API
-        assert genres != null;
+        if (genres == null) {
+            throw new NullPointerException("Variable 'genres' is null.");
+        }
+
         title = title.replace("-", " ");
         return new Movie(title, director, duration, releaseYear, description, genres.toString(), rating, numRatings);
     }

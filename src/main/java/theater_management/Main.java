@@ -41,7 +41,7 @@ public class Main {
                     System.exit(0);
 
                 case 1:
-                    Movie movie = add_movie.main();
+                    Movie movie = MovieService.getMovie();
                     theater.addMovie(movie);
                     System.out.println("Movie added successfully!\n");
                     break;
