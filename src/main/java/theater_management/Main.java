@@ -41,7 +41,7 @@ public class Main {
                     System.exit(0);
 
                 case 1:
-                    Movie movie = MovieService.getMovie();
+                    Movie movie = TmdbClient.getMovie();
                     theater.addMovie(movie);
                     System.out.println("Movie added successfully!\n");
                     break;
@@ -51,7 +51,7 @@ public class Main {
                     System.out.print("Enter the title of the movie you want to remove: ");
                     String titleToRemove = input.nextLine();
                     List<Movie> movies = theater.getAllMovies();
-                    boolean isRemoved = new remove_movie().remove_movie(titleToRemove, movies);
+                    boolean isRemoved = new MovieService().removeMovie(titleToRemove, movies);
                     if (isRemoved) {
                         System.out.println(titleToRemove + " has been removed from the list.");
                     } else {
