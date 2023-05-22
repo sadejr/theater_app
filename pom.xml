@@ -46,6 +46,12 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/libs/json-simple.jar</systemPath>
         </dependency>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>

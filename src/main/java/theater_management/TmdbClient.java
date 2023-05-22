@@ -58,6 +58,7 @@ public class TmdbClient {
 
         // Send a request to the API to get the movie details
         StringBuilder genres = null;
+        String originalTitle;
         try {
             URL url = new URL("https://api.themoviedb.org/3/search/movie?api_key=" + apiKey + "&query=" + title);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -80,41 +81,49 @@ public class TmdbClient {
             if (results.size() > 0) {
                 JSONObject movie = (JSONObject) results.get(0);
 
-                // Extract the release year from the JSON response
-                String release_date = (String) movie.get("release_date");
-                releaseYear = Integer.parseInt(release_date.substring(0, 4));
+                // Extract the original title from the JSON response and check if it matches with user input
+                originalTitle = (String) movie.get("original_title");
+                System.out.println(originalTitle);
+                System.out.println(title);
+                if (!originalTitle.replaceAll("\\s", "").equalsIgnoreCase(title.replaceAll("-", ""))) {
+                    throw new RuntimeException("There was no film with the specific title. Try again!");
+                } else {
 
-                // Extract the movie description from the JSON response
-                description = (String) movie.get("overview");
+                    // Extract the release year from the JSON response
+                    String release_date = (String) movie.get("release_date");
+                    releaseYear = Integer.parseInt(release_date.substring(0, 4));
 
-                // Extract the movie genres from the JSON response
-                JSONArray genreIds = (JSONArray) movie.get("genre_ids");
-                genres = new StringBuilder();
-                for (Object id : genreIds) {
-                    int genreId = ((Long) id).intValue();
-                    String genreName = genreMapper.getName(genreId);
-                    genres.append(genreName).append(", ");
+                    // Extract the movie description from the JSON response
+                    description = (String) movie.get("overview");
+
+                    // Extract the movie genres from the JSON response
+                    JSONArray genreIds = (JSONArray) movie.get("genre_ids");
+                    genres = new StringBuilder();
+                    for (Object id : genreIds) {
+                        int genreId = ((Long) id).intValue();
+                        String genreName = genreMapper.getName(genreId);
+                        genres.append(genreName).append(", ");
+                    }
+                    genres = new StringBuilder(genres.substring(0, genres.length() - 2)); // Remove the last comma and space
+
+
+                    // Extract the movie rating from the JSON response
+                    rating = (Double) movie.get("vote_average");
+
+                    // Extract the number of ratings for the movie from the JSON response
+                    numRatings = ((Long) movie.get("vote_count")).intValue();
                 }
-                genres = new StringBuilder(genres.substring(0, genres.length() - 2)); // Remove the last comma and space
-
-
-                // Extract the movie rating from the JSON response
-                rating = (Double) movie.get("vote_average");
-
-                // Extract the number of ratings for the movie from the JSON response
-                numRatings = ((Long) movie.get("vote_count")).intValue();
             }
-
         } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
+            System.out.println(e.getMessage());
         }
 
         // Create a Movie object using the details obtained from the API
         if (genres == null) {
-            throw new NullPointerException("Variable 'genres' is null.");
+            return null;
         }
-
         title = title.replace("-", " ");
         return new Movie(title, director, duration, releaseYear, description, genres.toString(), rating, numRatings);
     }
+
 }

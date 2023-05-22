@@ -43,8 +43,10 @@ public class Main {
                 case 1:
                     TmdbClient tmdbClient = new TmdbClient();
                     Movie movie = tmdbClient.getMovie();
-                    theater.addMovie(movie);
-                    System.out.println("Movie added successfully!\n");
+                    if (movie != null) {
+                        theater.addMovie(movie);
+                        System.out.println("Movie added successfully!\n");
+                    }
                     break;
 
                 case 2:
