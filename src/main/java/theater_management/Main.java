@@ -1,5 +1,10 @@
 package theater_management;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -15,10 +20,10 @@ public class Main {
         String theaterLocation = input.nextLine();
 
         Theater theater = new Theater(theaterName, theaterLocation);
+        System.out.println("Welcome to the " + theater.getName() + " at " + theater.getLocation() + "!");
 
         int choice;
         while(true){
-            System.out.println("Welcome to the " + theater.getName() + " at " + theater.getLocation() + "!");
             System.out.println("""
                     1. Add a movie
                     2. Remove a movie
@@ -109,15 +114,60 @@ public class Main {
                     input.nextLine(); // consume any leftover input in buffer
                     System.out.print("Enter the title of the movie: ");
                     String title = input.nextLine();
-                    System.out.print("Enter the time of the showtime (e.g. 7:00 PM): ");
-                    String time = input.nextLine();
-                    System.out.print("Enter the date of the showtime (e.g. 2022-12-15): ");
-                    String date = input.nextLine();
-                    System.out.print("Enter the ticket price for the showtime: ");
-                    double ticketPrice = input.nextDouble();
+                    double ticketPrice = 0;
+                    String time = null, date = null;
+
+                    // Check if the movie exists in the list
+                    boolean filmExists = false;
+                    List<Movie> films = theater.getAllMovies();
+                    for (Movie film : films) {
+                        if (film.getTitle().equalsIgnoreCase(title)) {
+                            filmExists = true;
+                            break;
+                        }
+                    }
+
+                    if (filmExists) {
+                        System.out.print("Enter the time of the showtime (e.g. 7:00 PM): ");
+                        time = input.nextLine();
+                        System.out.print("Enter the date of the showtime (e.g. 2022-12-15): ");
+                        date = input.nextLine();
+
+                        try {
+                            LocalTime.parse(time, DateTimeFormatter.ofPattern("h:mm a"));
+                        } catch (DateTimeParseException e) {
+                            System.out.println("Invalid format for time. Please try again.");
+                            break;
+                        }
+
+                        try {
+                            LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                        } catch (DateTimeParseException e) {
+                            System.out.println("Invalid format for date. Please try again.");
+                            break;
+                        }
+
+                        boolean validPrice = false;
+                        while (!validPrice) {
+                            try {
+                                System.out.print("Enter the ticket price for the showtime: ");
+                                ticketPrice = input.nextDouble();
+                                validPrice = true;
+                            } catch (InputMismatchException e) {
+                                System.out.println("Invalid format for price. Please try again.");
+                                input.nextLine(); // clear the invalid input
+                            }
+                        }
+                    } else {
+                        System.out.println("Movie not found in the list. Please add the movie before adding a showtime.");
+                        break;
+                    }
+
                     Showtime showtime = new Showtime(title, time, date, ticketPrice);
                     theater.addShowtime(showtime);
+                    System.out.println("Showtime added successfully!");
                     break;
+
 
                 case 6:
                     input.nextLine(); // consume any leftover input in buffer
@@ -177,9 +227,9 @@ public class Main {
                             System.out.println("Time: " + movie_showtimes.time());
                             System.out.println("Date: " + movie_showtimes.date());
                             System.out.println("Price: " + String.format("%.1f", movie_showtimes.price()));
-                            System.out.println();
                         }
                     }
+                    System.out.println();
                     break;
 
                 case 9:

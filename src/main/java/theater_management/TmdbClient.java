@@ -83,8 +83,6 @@ public class TmdbClient {
 
                 // Extract the original title from the JSON response and check if it matches with user input
                 originalTitle = (String) movie.get("original_title");
-                System.out.println(originalTitle);
-                System.out.println(title);
                 if (!originalTitle.replaceAll("\\s", "").equalsIgnoreCase(title.replaceAll("-", ""))) {
                     throw new RuntimeException("There was no film with the specific title. Try again!");
                 } else {
