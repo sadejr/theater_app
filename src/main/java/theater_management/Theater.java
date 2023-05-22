@@ -30,9 +30,9 @@ public class Theater extends Venue {
 
     public Showtime getShowtime(String title, String time, String date) {
         for (Showtime showtime : showtimes) {
-            if (showtime.title().equalsIgnoreCase(title)
-                    && showtime.time().equalsIgnoreCase(time)
-                    && showtime.date().equalsIgnoreCase(date)) {
+            if (showtime.getTitle().equalsIgnoreCase(title)
+                    && showtime.getTime().equalsIgnoreCase(time)
+                    && showtime.getDate().equalsIgnoreCase(date)) {
                 return showtime;
             }
         }
@@ -41,7 +41,7 @@ public class Theater extends Venue {
 
     public Showtime getShowtimeByTitle(String title) {
         for (Showtime showtime : showtimes) {
-            if (showtime.title().equalsIgnoreCase(title)) {
+            if (showtime.getTitle().equalsIgnoreCase(title)) {
                 return showtime;
             }
         }
@@ -55,8 +55,11 @@ public class Theater extends Venue {
     public boolean buyTicket(String title, String time, String date, int row, int col) {
         Showtime showtime = getShowtime(title, time, date);
         if (showtime != null) {
-            if (!seating[row - 1][col - 1]) {
-                seating[row - 1][col - 1] = true;
+            if (!showtime.isInitialized()) {
+                showtime.initializeSeating();
+            }
+            if (!showtime.getSeating()[row - 1][col - 1]) {
+                showtime.getSeating()[row - 1][col - 1] = true;
                 return true;
             }
         }
@@ -66,9 +69,12 @@ public class Theater extends Venue {
     public void printSeating(String title, String time, String date) {
         Showtime showtime = getShowtime(title, time, date);
         if (showtime != null) {
-            boolean[][] seatStatus = new boolean[10][10];
+            if (!showtime.isInitialized()) {
+                showtime.initializeSeating();
+            }
+            boolean[][] seatStatus = showtime.getSeating();
             for (int i = 0; i < seatStatus.length; i++) {
-                System.arraycopy(seating[i], 0, seatStatus[i], 0, seatStatus[i].length);
+                System.arraycopy(showtime.getSeating()[i], 0, seatStatus[i], 0, seatStatus[i].length);
             }
             System.out.println("Seating for " + title + " at " + time + " on " + date + ":");
             for (boolean[] status : seatStatus) {

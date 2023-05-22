@@ -182,9 +182,9 @@ public class Main {
                     Showtime showtimeToRemove = null;
                     List<Showtime> showtimes = theater.getAllShowtimes();
                     for (Showtime showtimeToBeRemoved : showtimes) {
-                        if (showtimeToBeRemoved.title().equalsIgnoreCase(titleToBeRemoved) &&
-                                showtimeToBeRemoved.date().equals(dateToBeRemoved) &&
-                                showtimeToBeRemoved.time().equals(timeToBeRemoved)) {
+                        if (showtimeToBeRemoved.getTitle().equalsIgnoreCase(titleToBeRemoved) &&
+                                showtimeToBeRemoved.getDate().equals(dateToBeRemoved) &&
+                                showtimeToBeRemoved.getTime().equals(timeToBeRemoved)) {
                             showtimeToRemove = showtimeToBeRemoved;
                             break;
                         }
@@ -208,9 +208,9 @@ public class Main {
                     } else {
                         System.out.println("Showtimes for " + movieTitle + ":");
                         for (Showtime movie_showtime : showtimes) {
-                            System.out.println("Time: " + movie_showtime.time());
-                            System.out.println("Date: " + movie_showtime.date());
-                            System.out.println("Price: " + String.format("%.1f", movie_showtime.price()));
+                            System.out.println("Time: " + movie_showtime.getTime());
+                            System.out.println("Date: " + movie_showtime.getDate());
+                            System.out.println("Price: " + String.format("%.1f", movie_showtime.getPrice()));
                             System.out.println();
                         }
                     }
@@ -223,10 +223,10 @@ public class Main {
                         System.out.println("There are no showtimes available.");
                     } else {
                         for (Showtime movie_showtimes : allShowtimes) {
-                            System.out.println("Movie: " + movie_showtimes.title());
-                            System.out.println("Time: " + movie_showtimes.time());
-                            System.out.println("Date: " + movie_showtimes.date());
-                            System.out.println("Price: " + String.format("%.1f", movie_showtimes.price()));
+                            System.out.println("Movie: " + movie_showtimes.getTitle());
+                            System.out.println("Time: " + movie_showtimes.getTime());
+                            System.out.println("Date: " + movie_showtimes.getDate());
+                            System.out.println("Price: " + String.format("%.1f", movie_showtimes.getPrice()));
                         }
                     }
                     System.out.println();
