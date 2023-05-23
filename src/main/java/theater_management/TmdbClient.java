@@ -17,18 +17,12 @@ public class TmdbClient {
         String title = input.nextLine();
         title = title.replace(" ", "-");
 
-        System.out.print("Enter the director of the movie: ");
-        String director = input.nextLine();
-
-        System.out.print("Enter the duration of the movie (in minutes): ");
-        int duration = input.nextInt();
-
         // Create a Movie object using the details obtained from the API
-        return retrieveMovie(title, director, duration);
+        return retrieveMovie(title);
     }
 
     // Send a request to the API to get the movie details
-    private Movie retrieveMovie(String title, String director, int duration) {
+    private Movie retrieveMovie(String title) {
         int releaseYear = 0;
         String description = "";
         double rating = 0.0;
@@ -121,7 +115,7 @@ public class TmdbClient {
             return null;
         }
         title = title.replace("-", " ");
-        return new Movie(title, director, duration, releaseYear, description, genres.toString(), rating, numRatings);
+        return new Movie(title, releaseYear, description, genres.toString(), rating, numRatings);
     }
 
 }

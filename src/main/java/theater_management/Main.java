@@ -77,11 +77,9 @@ public class Main {
                     for (Movie newMovie : allMovies) {
                         if (newMovie.getTitle().equalsIgnoreCase(titleToView)) {
                             System.out.println("Title: " + newMovie.getTitle());
-                            System.out.println("Director: " + newMovie.getDirector());
                             System.out.println("Release Year: " + newMovie.getReleaseYear());
                             System.out.println("Review: " + newMovie.getDescription());
                             System.out.println("Genre: " + newMovie.getGenre());
-                            System.out.println("Duration: " + newMovie.getDuration());
                             System.out.println("Rating: " + newMovie.getRating());
                             System.out.println("Number of Ratings: " + newMovie.getNumRatings());
                             System.out.println();
@@ -99,11 +97,9 @@ public class Main {
                     List<Movie> movieList = theater.getAllMovies();
                     for (Movie newMovie : movieList) {
                         System.out.println("Title: " + newMovie.getTitle());
-                        System.out.println("Director: " + newMovie.getDirector());
                         System.out.println("Release Year: " + newMovie.getReleaseYear());
                         System.out.println("Review: " + newMovie.getDescription());
                         System.out.println("Genre: " + newMovie.getGenre());
-                        System.out.println("Duration: " + newMovie.getDuration());
                         System.out.println("Rating: " + newMovie.getRating());
                         System.out.println("Number of Ratings: " + newMovie.getNumRatings());
                         System.out.println();
@@ -115,7 +111,7 @@ public class Main {
                     System.out.print("Enter the title of the movie: ");
                     String title = input.nextLine();
                     double ticketPrice = 0;
-                    String time = null, date = null;
+                    String time, date;
 
                     // Check if the movie exists in the list
                     boolean filmExists = false;
